@@ -153,7 +153,11 @@ func (c *EmailTemplatesMockClientV1) DeleteTemplateById(ctx context.Context, cor
 		if template.Id == id {
 			buf := *template
 			item = &buf
-			c.templates = append(c.templates[:index], c.templates[index+1:]...)
+			if index < len(c.templates) {
+				c.templates = append(c.templates[:index], c.templates[index+1:]...)
+			} else {
+				c.templates = c.templates[:index]
+			}
 			break
 		}
 	}
